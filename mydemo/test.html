@@ -1,0 +1,45 @@
+<html ng-app="myApp">
+<body>
+<div ng-controller="TestController">
+<p>{{someText.message}}</p>
+<div ng-click="dosomething()"><p>test</p></div>
+</div>
+
+<div>
+<ul ng-controller="StudentListController">
+    <li ng-repeat="student in students">
+        <a href="/student/view/{{student.id}}">{{student.name}}</a>
+    </li>
+    <button ng-click="insertTom()">Insert</button>
+    <button ></button>
+</ul>
+</div>
+<script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.0.8/angular.min.js"></script>
+<script>
+    var myApp = angular.module('myApp', []);
+    myApp.controller('TestController', function($scope) {
+        var someText = {};
+        someText.message = 'hello ,everyone !';
+        $scope.someText = someText;
+        $scope.dosomething = function () {
+
+            alert('my name is jackyzhang');
+        }
+    });
+
+    var students = [
+        {name: 'Mary Contray', id: '1'},
+        {name: 'Jack Sprat', id: '2'},
+        {name: 'Jill Hill', id: '3'}
+    ];
+    myApp.controller('StudentListController', function ($scope) {
+        $scope.students = students;
+
+        $scope.insertTom = function () {
+            $scope.students.splice(1, 0, {name: 'tom thumb', id:'4'});
+        }
+    });
+
+</script>
+</body>
+</html>
