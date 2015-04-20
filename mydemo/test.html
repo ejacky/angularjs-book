@@ -1,18 +1,35 @@
 <html ng-app="myApp">
+<head>
+    <style>
+        .menu-disabled-true {
+            color:gray;
+        }
+    </style>
+</head>
 <body>
 <div ng-controller="TestController">
 <p>{{someText.message}}</p>
 <div ng-click="dosomething()"><p>test</p></div>
 </div>
 
-<div>
-<ul ng-controller="StudentListController">
-    <li ng-repeat="student in students">
-        <a href="/student/view/{{student.id}}">{{student.name}}</a>
-    </li>
-    <button ng-click="insertTom()">Insert</button>
-    <button ></button>
-</ul>
+<div ng-controller="StudentListController">
+    <button ng-click="toggleMenu()">Toggle Menu</button>
+    <ul ng-show="menuState.show">
+        <li ng-repeat="student in students">
+            <a href="/student/view/{{student.id}}">{{student.name}}</a>
+        </li>
+        <button ng-click="insertTom()">Insert</button>
+    </ul>
+</div>
+
+<div ng-controller="DeathrayMenuController">
+    <button ng-click="toggleMenu()">Toggle Menu</button>
+    <ul ng-show="menuState.show">
+        <li ng-click="stun()" class="menu-disabled-{{isDisabled}}">Stun</li>
+        <li ng-click="distintegrate()">Distintegrate</li>
+        <li ng-click="erase()">Erase from history</li>
+    </ul>
+
 </div>
 <script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.0.8/angular.min.js"></script>
 <script>
@@ -37,7 +54,24 @@
 
         $scope.insertTom = function () {
             $scope.students.splice(1, 0, {name: 'tom thumb', id:'4'});
+        };
+
+        $scope.menuState = { show : false};
+        $scope.toggleMenu = function () {
+            $scope.menuState.show = !$scope.menuState.show;
         }
+    });
+
+    myApp.controller('DeathrayMenuController', function($scope) {
+        $scope.menuState = {show : false};
+
+        $scope.toggleMenu = function () {
+            $scope.menuState.show = !$scope.menuState.show;
+        };
+
+        $scope.stun = function () {
+            $scope.isDisabled = true;
+        };
     });
 
 </script>
